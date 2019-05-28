@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BlockNotiSche</string>
+    <string name="title_of_note">Заголовок заметки</string>
+    <string name="body_of_note">Заметки</string>
+</resources>
