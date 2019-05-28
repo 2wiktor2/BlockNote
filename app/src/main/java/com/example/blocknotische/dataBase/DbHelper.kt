@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.util.ArrayList
 
-class DbHelper(context: Context) : SQLiteOpenHelper(context, "DBForNotes", null, 1) {
+class DbHelper(context: Context?) : SQLiteOpenHelper(context, "DBForNotes", null, 1) {
     private val COLUMN_ID = "ColumnId"
     private val COLUMN_TITLE = "ColumnTitle"
     private val COLUMN_BODY = "ColumnBody"

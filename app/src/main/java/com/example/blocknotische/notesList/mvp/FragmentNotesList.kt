@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
@@ -80,8 +79,10 @@ class FragmentNotesList : Fragment(), ClickInterface {
     private fun openFragmentNewNote() {
         val fragmentNewNote = FragmentNewNote()
         val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.recycler_view_container, fragmentNewNote)
-        fragmentTransaction?.addToBackStack("")
-        fragmentTransaction?.commit()
+        fragmentTransaction?.apply {
+            replace(R.id.recycler_view_container, fragmentNewNote)
+            addToBackStack("")
+            commit()
+        }
     }
 }

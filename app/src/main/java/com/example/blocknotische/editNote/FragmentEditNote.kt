@@ -31,7 +31,8 @@ class FragmentEditNote : Fragment() {
             color = arg.getInt(KEY_COLOR)
             idOfNote = arg.getInt(KEY_ID)
         }
-        dbHelper = DbHelper(context!!)
+
+        dbHelper = DbHelper(context)
 
         edit_note_title.setText(title)
         edit_note_body.setText(body)

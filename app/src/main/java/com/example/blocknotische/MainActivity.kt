@@ -28,8 +28,10 @@ class MainActivity : AppCompatActivity() {
         val notesListFragment = FragmentNotesList()
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.recycler_view_container, notesListFragment)
-        fragmentTransaction.commit()
+        fragmentTransaction.apply {
+            replace(R.id.recycler_view_container, notesListFragment)
+            commit()
+        }
     }
 
     fun showArrow(show: Boolean) {
