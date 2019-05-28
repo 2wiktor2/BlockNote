@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.fragment_edit_note.*
 
 class FragmentEditNote : Fragment() {
 
-    private lateinit var title: String
-    private lateinit var body: String
+    private var title: String? = null
+    private var body: String? = null
     private var idOfNote: Int = 0
     private var color: Int = 0
 
