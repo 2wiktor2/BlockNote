@@ -32,7 +32,7 @@ class FragmentNewNote : Fragment(), View.OnClickListener {
         b_new_color_3.setOnClickListener(this)
         b_new_color_4.setOnClickListener(this)
 
-        dbHelper = DbHelper(context!!)
+        dbHelper = DbHelper(context)
     }
 
     override fun onResume() {
@@ -59,7 +59,7 @@ class FragmentNewNote : Fragment(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+        when (item?.itemId) {
             R.id.item_save -> {
                 addRow()
                 closeFragment()

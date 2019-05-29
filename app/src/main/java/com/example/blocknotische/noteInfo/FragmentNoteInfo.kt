@@ -50,8 +50,8 @@ class FragmentNoteInfo : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.toolbar_menu_note_info, menu)
-        menu!!.setGroupVisible(R.menu.toolbar_menu_for_note_list, false)
+        inflater?.inflate(R.menu.toolbar_menu_note_info, menu)
+        menu?.setGroupVisible(R.menu.toolbar_menu_for_note_list, false)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -64,7 +64,7 @@ class FragmentNoteInfo : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+        when (item?.itemId) {
             R.id.item_edit -> {
                 val fragmentEditNote = FragmentEditNote.newInstance(title, body, color, idOfNote)
 

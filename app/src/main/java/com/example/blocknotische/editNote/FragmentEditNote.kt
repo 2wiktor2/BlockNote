@@ -84,7 +84,7 @@ class FragmentEditNote : Fragment() {
     }
 
     private fun closeFragment() {
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
 
     companion object {
