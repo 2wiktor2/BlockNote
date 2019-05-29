@@ -49,8 +49,8 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "DBForNotes", null
     }
 
 
-    fun getData(arrayListOFNoteModels: ArrayList<NoteModel>): ArrayList<NoteModel> {
-        arrayListOFNoteModels.clear()
+    fun getData(): ArrayList<NoteModel> {
+        val arrayListOFNoteModels = ArrayList<NoteModel>()
 
         val database = writableDatabase
         val columns = arrayOf(COLUMN_ID, COLUMN_TITLE, COLUMN_BODY, COLUMN_COLOR)

@@ -54,7 +54,7 @@ class FragmentNewNote : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.toolbar_menu_for_new_note, menu)
+        inflater?.inflate(R.menu.toolbar_menu_for_new_note, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
