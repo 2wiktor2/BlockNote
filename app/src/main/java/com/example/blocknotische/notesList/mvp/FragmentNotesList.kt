@@ -27,7 +27,7 @@ class FragmentNotesList : Fragment(), ClickInterface {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dbHelper = DbHelper(context!!)
+        dbHelper = DbHelper(context)
         showNoteList()
     }
 

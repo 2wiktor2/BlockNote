@@ -2,6 +2,7 @@ package com.example.blocknotische.noteInfo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.TextUtils.replace
 import android.view.*
 import android.widget.Toast
 import com.example.blocknotische.MainActivity
@@ -12,7 +13,6 @@ import com.example.blocknotische.editNote.FragmentEditNote
 import kotlinx.android.synthetic.main.fragment_note_info.*
 
 class FragmentNoteInfo : Fragment() {
-
 
 
     private lateinit var title: String
@@ -32,7 +32,7 @@ class FragmentNoteInfo : Fragment() {
         note_title.text = title
         note_body.text = body
 
-        dbHelper = DbHelper(context!!)
+        dbHelper = DbHelper(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +47,7 @@ class FragmentNoteInfo : Fragment() {
             showArrow(true)
             titleColor = color
         }
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.toolbar_menu_note_info, menu)
@@ -62,20 +60,21 @@ class FragmentNoteInfo : Fragment() {
     }
 
     private fun closeFragment() {
-        activity!!.supportFragmentManager.popBackStack()
+        activity?.supportFragmentManager?.popBackStack()
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.item_edit -> {
                 val fragmentEditNote = FragmentEditNote.newInstance(title, body, color, idOfNote)
 
-                val manager = fragmentManager!!
-                val transaction = manager.beginTransaction()
-                transaction.replace(R.id.recycler_view_container, fragmentEditNote)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                val manager = fragmentManager
+                val transaction = manager?.beginTransaction()
+                transaction?.let {
+                    it.replace(R.id.recycler_view_container, fragmentEditNote)
+                    it.addToBackStack(null)
+                    it.commit()
+                }
                 Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show()
             }
 
