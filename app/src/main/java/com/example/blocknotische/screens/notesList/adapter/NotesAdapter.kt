@@ -1,4 +1,4 @@
-package com.example.blocknotische.notesList.adapter
+package com.example.blocknotische.screens.notesList.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Color

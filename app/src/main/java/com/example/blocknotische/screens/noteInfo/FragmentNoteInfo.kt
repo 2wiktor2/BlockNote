@@ -1,15 +1,14 @@
-package com.example.blocknotische.noteInfo
+package com.example.blocknotische.screens.noteInfo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.TextUtils.replace
 import android.view.*
 import android.widget.Toast
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
 import com.example.blocknotische.dataBase.NoteModel
-import com.example.blocknotische.editNote.FragmentEditNote
+import com.example.blocknotische.screens.editNote.FragmentEditNote
 import kotlinx.android.synthetic.main.fragment_note_info.*
 
 class FragmentNoteInfo : Fragment() {

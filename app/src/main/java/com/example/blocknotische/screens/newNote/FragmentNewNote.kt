@@ -1,4 +1,4 @@
-package com.example.blocknotische.newNote
+package com.example.blocknotische.screens.newNote
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -48,9 +48,15 @@ class FragmentNewNote : Fragment(), View.OnClickListener {
     }
 
     private fun addRow() {
-        val title = et_new_note_title.text.toString()
-        val body = et_new_note_body.text.toString()
-        dbHelper.createRow(title, body, color)
+        if (et_new_note_title.text.toString() == "" || et_new_note_body.text.toString() == "") {
+            Toast.makeText(context, "Заметка не должна быть пустой", Toast.LENGTH_LONG).show()
+        } else {
+            val title = et_new_note_title.text.toString()
+            val body = et_new_note_body.text.toString()
+            dbHelper.createRow(title, body, color)
+            Toast.makeText(context, "заметка сохранена", Toast.LENGTH_SHORT).show()
+            closeFragment()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -62,8 +68,6 @@ class FragmentNewNote : Fragment(), View.OnClickListener {
         when (item?.itemId) {
             R.id.item_save -> {
                 addRow()
-                closeFragment()
-                Toast.makeText(context, "заметка сохранена", Toast.LENGTH_SHORT).show()
             }
         }
         return false

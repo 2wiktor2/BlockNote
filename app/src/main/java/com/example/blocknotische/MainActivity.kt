@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.example.blocknotische.notesList.mvp.FragmentNotesList
+import com.example.blocknotische.screens.notesList.mvp.FragmentNotesList
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {

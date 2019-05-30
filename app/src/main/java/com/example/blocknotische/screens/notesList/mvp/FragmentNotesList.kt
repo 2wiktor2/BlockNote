@@ -1,4 +1,4 @@
-package com.example.blocknotische.notesList.mvp
+package com.example.blocknotische.screens.notesList.mvp
 
 import android.graphics.Color
 import android.os.Bundle
@@ -11,10 +11,10 @@ import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
 import com.example.blocknotische.dataBase.NoteModel
-import com.example.blocknotische.newNote.FragmentNewNote
-import com.example.blocknotische.noteInfo.FragmentNoteInfo
-import com.example.blocknotische.notesList.adapter.ClickInterface
-import com.example.blocknotische.notesList.adapter.NotesAdapter
+import com.example.blocknotische.screens.newNote.FragmentNewNote
+import com.example.blocknotische.screens.noteInfo.FragmentNoteInfo
+import com.example.blocknotische.screens.notesList.adapter.ClickInterface
+import com.example.blocknotische.screens.notesList.adapter.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notes_list.*
 
 class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView {
@@ -52,6 +52,10 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
             titleColor = Color.WHITE
         }
     }
+    override fun onStop() {
+        super.onStop()
+        dbHelper.close()
+    }
     override fun click(model: NoteModel) {
         val fragmentNoteInfo = FragmentNoteInfo.newInstance(model)
         val manager = fragmentManager ?: return
@@ -84,8 +88,6 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
             commit()
         }
     }
-
-
     override fun showListOfNotes(list: ArrayList<NoteModel>) {
         my_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)

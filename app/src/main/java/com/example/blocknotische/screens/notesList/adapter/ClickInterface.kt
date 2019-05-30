@@ -1,4 +1,4 @@
-package com.example.blocknotische.notesList.adapter
+package com.example.blocknotische.screens.notesList.adapter
 
 import com.example.blocknotische.dataBase.NoteModel
 

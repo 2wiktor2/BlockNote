@@ -1,22 +1,40 @@
-package com.example.blocknotische.editNote
+package com.example.blocknotische.screens.editNote
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.Toast
+import com.arellomobile.mvp.MvpAppCompatFragment
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
 import kotlinx.android.synthetic.main.fragment_edit_note.*
 
-class FragmentEditNote : Fragment() {
+class FragmentEditNote : MvpAppCompatFragment(), EditNoteView {
+
+    // todo переместить в нужное место
+    override fun editListOfNotes() {
+    }
+
+    @InjectPresenter
+    lateinit var presenter: EditNotePresenter
+    @ProvidePresenter
+    fun providePresenter(): EditNotePresenter{
+        return EditNotePresenter(dbHelper)
+    }
 
     private var title: String? = null
     private var body: String? = null
     private var idOfNote: Int = 0
     private var color: Int = 0
 
-    private lateinit var dbHelper: DbHelper
+      val dbHelper by lazy { DbHelper(context) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_edit_note, container, false)
@@ -31,16 +49,8 @@ class FragmentEditNote : Fragment() {
             color = arg.getInt(KEY_COLOR)
             idOfNote = arg.getInt(KEY_ID)
         }
-
-        dbHelper = DbHelper(context)
-
         edit_note_title.setText(title)
         edit_note_body.setText(body)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onResume() {
