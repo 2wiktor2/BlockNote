@@ -20,16 +20,14 @@ import kotlinx.android.synthetic.main.fragment_notes_list.*
 class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView {
 
 
-    val dbHelper = DbHelper(context)
     @InjectPresenter
-     var presenter = NotesListPresenter(dbHelper)
-
-
-
+     lateinit var presenter : NotesListPresenter
     @ProvidePresenter
     fun providePresenter(): NotesListPresenter {
         return NotesListPresenter(dbHelper)
     }
+
+    val dbHelper by lazy { DbHelper(context) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +40,7 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter?.start()
+        presenter.start()
 
     }
 

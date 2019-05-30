@@ -6,7 +6,7 @@ import com.example.blocknotische.dataBase.DbHelper
 
 
 @InjectViewState
-class NotesListPresenter(private val dbHelper: DbHelper) : MvpPresenter<NotesListView>() {
+class NotesListPresenter( val dbHelper: DbHelper) : MvpPresenter<NotesListView>() {
 
 /*    override fun onFirstViewAttach() {
         super.onFirstViewAttach()
