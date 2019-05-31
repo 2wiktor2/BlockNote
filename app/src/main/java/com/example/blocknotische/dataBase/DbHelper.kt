@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.util.ArrayList
 
 class DbHelper(context: Context?) : SQLiteOpenHelper(context, "DBForNotes", null, 1) {
+
+
     private val COLUMN_ID = "ColumnId"
     private val COLUMN_TITLE = "ColumnTitle"
     private val COLUMN_BODY = "ColumnBody"
@@ -20,34 +22,6 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "DBForNotes", null
                 COLUMN_COLOR + " integer); ")
 
     }
-
-    fun createRow(title: String, body: String, color: Int) {
-        val database = writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(COLUMN_TITLE, title)
-        contentValues.put(COLUMN_BODY, body)
-        contentValues.put(COLUMN_COLOR, color)
-
-        val rowIg = database.insert(NAME_OF_TABLE, null, contentValues)
-    }
-
-    fun updateRow(title: String, body: String, color: Int, id: Int) {
-        val database = writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(COLUMN_TITLE, title)
-        contentValues.put(COLUMN_BODY, body)
-        contentValues.put(COLUMN_COLOR, color)
-
-        val strFilter = "$COLUMN_ID = $id"
-
-        database.update(NAME_OF_TABLE, contentValues, strFilter, null)
-    }
-
-    fun deleteRow(id: Int) {
-        val database = writableDatabase
-        val delCount = database.delete(NAME_OF_TABLE, "$COLUMN_ID = $id", null)
-    }
-
 
     fun getData(): ArrayList<NoteModel> {
         val arrayListOFNoteModels = ArrayList<NoteModel>()
@@ -72,6 +46,34 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "DBForNotes", null
             cursor.close()
         }
         return arrayListOFNoteModels
+    }
+
+    fun createRow(title: String, body: String, color: Int) {
+        val database = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_TITLE, title)
+        contentValues.put(COLUMN_BODY, body)
+        contentValues.put(COLUMN_COLOR, color)
+
+        val rowIg = database.insert(NAME_OF_TABLE, null, contentValues)
+    }
+
+    fun updateRow(title: String, body: String, color: Int?, id: Long?) {
+        val database = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_TITLE, title)
+        contentValues.put(COLUMN_BODY, body)
+        contentValues.put(COLUMN_COLOR, color)
+
+        val strFilter = "$COLUMN_ID = $id"
+
+        database.update(NAME_OF_TABLE, contentValues, strFilter, null)
+    }
+
+
+    fun deleteRow(id: Long) {
+        val database = writableDatabase
+        val delCount = database.delete(NAME_OF_TABLE, "$COLUMN_ID = $id", null)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

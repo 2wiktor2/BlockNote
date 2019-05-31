@@ -11,8 +11,8 @@ import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
 import com.example.blocknotische.dataBase.NoteModel
-import com.example.blocknotische.screens.newNote.FragmentNewNote
-import com.example.blocknotische.screens.noteInfo.FragmentNoteInfo
+import com.example.blocknotische.screens.newNote.NewNoteFragment
+import com.example.blocknotische.screens.noteInfo.NoteInfoFragment
 import com.example.blocknotische.screens.notesList.adapter.ClickInterface
 import com.example.blocknotische.screens.notesList.adapter.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notes_list.*
@@ -21,7 +21,8 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
 
 
     @InjectPresenter
-     lateinit var presenter : NotesListPresenter
+    lateinit var presenter: NotesListPresenter
+
     @ProvidePresenter
     fun providePresenter(): NotesListPresenter {
         return NotesListPresenter(dbHelper)
@@ -47,27 +48,40 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).apply {
-            setMyTitle("BlockNotiSche")
+            setMyTitle(getString(R.string.app_name))
             showArrow(false)
             titleColor = Color.WHITE
         }
     }
+
     override fun onStop() {
         super.onStop()
-        dbHelper.close()
+        presenter.closeDatabase()
     }
+
     override fun click(model: NoteModel) {
-        val fragmentNoteInfo = FragmentNoteInfo.newInstance(model)
-        val manager = fragmentManager ?: return
-        val transaction = manager.beginTransaction()
-        transaction.apply {
+        val fragmentNoteInfo = NoteInfoFragment.newInstance(model)
+        //  val manager = fragmentManager ?: return
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.apply {
             replace(R.id.recycler_view_container, fragmentNoteInfo)
-            addToBackStack(null)
+            addToBackStack("")
+            commit()
+        }
+    }
+
+    private fun openFragmentNewNote() {
+        val fragmentNewNote = NewNoteFragment()
+        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+        fragmentTransaction?.apply {
+            replace(R.id.recycler_view_container, fragmentNewNote)
+            addToBackStack("")
             commit()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        menu?.clear()
         inflater?.inflate(R.menu.toolbar_menu_for_note_list, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -79,15 +93,6 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
         return false
     }
 
-    private fun openFragmentNewNote() {
-        val fragmentNewNote = FragmentNewNote()
-        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-        fragmentTransaction?.apply {
-            replace(R.id.recycler_view_container, fragmentNewNote)
-            addToBackStack("")
-            commit()
-        }
-    }
     override fun showListOfNotes(list: ArrayList<NoteModel>) {
         my_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)

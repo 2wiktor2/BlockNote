@@ -12,4 +12,7 @@ class NotesListPresenter( val dbHelper: DbHelper) : MvpPresenter<NotesListView>(
         val list = dbHelper.getData()
         viewState.showListOfNotes(list)
     }
+    fun closeDatabase() {
+        dbHelper.close()
+    }
 }

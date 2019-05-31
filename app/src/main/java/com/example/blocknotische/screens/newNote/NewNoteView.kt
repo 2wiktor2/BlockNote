@@ -1,4 +1,10 @@
 package com.example.blocknotische.screens.newNote
 
-interface NewNoteView {
+import com.arellomobile.mvp.MvpView
+
+interface NewNoteView : MvpView{
+
+    fun showAccessMessage()
+    fun showFailMessage()
+    fun closeFragment()
 }
