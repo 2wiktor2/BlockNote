@@ -39,12 +39,19 @@ class EditNoteFragment : MvpAppCompatFragment(), EditNoteView {
     @ProvidePresenter
     fun providePresenter(): EditNotePresenter {
 
-        val title = arguments?.getString(KEY_TITLE)
-        val body = arguments?.getString(KEY_BODY)
-        val color = arguments?.getInt(KEY_COLOR)
-        val id = arguments?.getLong(KEY_ID)
+        val title: String?
+        val body: String?
+        val color: Int
+        val id: Long
 
-        return EditNotePresenter(dbHelper, title, body, color, id)
+        arguments?.let {
+            title = it.getString(KEY_TITLE)
+            body = it.getString(KEY_BODY)
+            color = it.getInt(KEY_COLOR)
+            id = it.getLong(KEY_ID)
+            return EditNotePresenter(dbHelper, title, body, color, id)
+        }
+        return EditNotePresenter(dbHelper, "---", "---", 1, 0)
     }
 
     val dbHelper by lazy { DbHelper(context) }
