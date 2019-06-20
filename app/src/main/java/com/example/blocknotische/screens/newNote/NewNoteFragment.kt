@@ -4,16 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import com.arellomobile.mvp.MvpAppCompatFragment
-import com.arellomobile.mvp.presenter.ProvidePresenter
+import androidx.fragment.app.Fragment
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
 import kotlinx.android.synthetic.main.fragment_new_note.*
 
-class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteMainContract.View {
+class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.View {
 
-   private lateinit var mPresenter: NewNotePresenter
+    private lateinit var mPresenter: NewNotePresenter
 
     val dbHelper by lazy { DbHelper(context) }
 
@@ -54,13 +53,13 @@ class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteMai
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.toolbar_menu_for_new_note, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu_for_new_note, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.item_save -> {
                 val title = et_new_note_title.text.toString()
                 val body = et_new_note_body.text.toString()

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import com.arellomobile.mvp.MvpAppCompatFragment
+import androidx.fragment.app.Fragment
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
@@ -12,7 +12,7 @@ import com.example.blocknotische.dataBase.NoteModel
 import com.example.blocknotische.screens.editNote.EditNoteFragment
 import kotlinx.android.synthetic.main.fragment_note_info.*
 
-class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoMainContract.View {
+class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
 
     private lateinit var mPresenter: NoteInfoPresenter
 
@@ -59,14 +59,14 @@ class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoMainContract.View {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        menu?.clear()
-        inflater?.inflate(R.menu.toolbar_menu_note_info, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.toolbar_menu_note_info, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.item_edit -> {
                 arguments?.let {
                     val noteModel = it.getSerializable(KEY_NOTE_MODEL) as NoteModel
@@ -80,10 +80,10 @@ class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoMainContract.View {
 
                     val manager = fragmentManager
                     val transaction = manager?.beginTransaction()
-                    transaction?.let { it ->
-                        it.replace(R.id.recycler_view_container, fragmentEditNote)
-                        it.addToBackStack(null)
-                        it.commit()
+                    transaction?.let { fragmentTransaction ->
+                        fragmentTransaction.replace(R.id.recycler_view_container, fragmentEditNote)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
                     }
                 }
             }

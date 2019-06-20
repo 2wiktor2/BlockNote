@@ -1,9 +1,9 @@
 package com.example.blocknotische.screens.editNote
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
@@ -78,13 +78,13 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
         mPresenter.closeDatabase()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.toolbar_menu_for_edit_note, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu_for_edit_note, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.item_save -> {
                 editRow()
             }
