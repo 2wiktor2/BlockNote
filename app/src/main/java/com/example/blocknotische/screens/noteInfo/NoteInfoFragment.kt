@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
@@ -14,12 +12,15 @@ import com.example.blocknotische.dataBase.NoteModel
 import com.example.blocknotische.screens.editNote.EditNoteFragment
 import kotlinx.android.synthetic.main.fragment_note_info.*
 
-class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoView {
+class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoMainContract.View {
 
+    private lateinit var mPresenter: NoteInfoPresenter
+
+    val dbHelper by lazy { DbHelper(context) }
 
     companion object {
-        const val KEY_NOTE_MODEL = "key_note_model"
 
+        const val KEY_NOTE_MODEL = "key_note_model"
         fun newInstance(noteModel: NoteModel): NoteInfoFragment {
             val fragmentNoteInfo = NoteInfoFragment()
             val bundle = Bundle()
@@ -27,28 +28,26 @@ class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoView {
             fragmentNoteInfo.arguments = bundle
             return fragmentNoteInfo
         }
+
     }
-
-    @InjectPresenter
-    lateinit var presenter: NoteInfoPresenter
-
-    @ProvidePresenter
-    fun providePresenter(): NoteInfoPresenter {
-        val noteModel: NoteModel? =
-                arguments?.getSerializable(KEY_NOTE_MODEL) as NoteModel
-
-        return NoteInfoPresenter(dbHelper, noteModel)
-    }
-
-    val dbHelper by lazy { DbHelper(context) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val noteModel: NoteModel? =
+                arguments?.getSerializable(KEY_NOTE_MODEL) as NoteModel
+
+        mPresenter = NoteInfoPresenter(this, dbHelper, noteModel)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_note_info, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mPresenter.setDataToFields()
     }
 
     override fun setDataToFields(noteModel: NoteModel) {
@@ -90,10 +89,10 @@ class NoteInfoFragment : MvpAppCompatFragment(), NoteInfoView {
             }
 
             R.id.item_delete -> {
-                presenter.deleteNote()
+                mPresenter.deleteNote()
             }
             R.id.item_share -> {
-                presenter.shareNote()
+                mPresenter.shareNote()
             }
         }
         return false

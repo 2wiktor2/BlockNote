@@ -1,18 +1,19 @@
 package com.example.blocknotische.screens.notesList.mvp
 
-import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import com.example.blocknotische.dataBase.DbHelper
 
 
-@InjectViewState
-class NotesListPresenter( val dbHelper: DbHelper) : MvpPresenter<NotesListView>() {
 
-    fun start (){
+class NotesListPresenter(
+        var mView: NotesListFragment,
+        val dbHelper: DbHelper) : NotesListMainContract.Presenter {
+
+
+    override fun start (){
         val list = dbHelper.getData()
-        viewState.showListOfNotes(list)
+        mView.showListOfNotes(list)
     }
-    fun closeDatabase() {
+    override fun closeDatabase() {
         dbHelper.close()
     }
 }

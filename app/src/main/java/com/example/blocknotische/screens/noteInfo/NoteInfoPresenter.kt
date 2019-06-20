@@ -1,29 +1,30 @@
 package com.example.blocknotische.screens.noteInfo
 
-import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import com.example.blocknotische.dataBase.DbHelper
 import com.example.blocknotische.dataBase.NoteModel
 
-@InjectViewState
-class NoteInfoPresenter(val dbHelper: DbHelper, val noteModel: NoteModel?) : MvpPresenter<NoteInfoView>() {
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
+class NoteInfoPresenter (
+        private val mView: NoteInfoFragment,
+        private val dbHelper: DbHelper,
+        private val noteModel: NoteModel?
+) : NoteInfoMainContract.Presenter {
 
+
+    override fun setDataToFields() {
         noteModel?.let {
-            viewState.setDataToFields(it)
+            mView.setDataToFields(it)
         }
     }
 
-    fun deleteNote() {
+    override fun deleteNote() {
         noteModel?.id?.let { dbHelper.deleteRow(it) }
-        viewState.closeFragment()
-        viewState.showMessageDelete()
+        mView.closeFragment()
+        mView.showMessageDelete()
     }
 
-    fun shareNote() {
-        noteModel?.let { viewState.setIntentForSharing(it.title, it.body) }
+    override fun shareNote() {
+        noteModel?.let { mView.setIntentForSharing(it.title, it.body) }
     }
 
 }

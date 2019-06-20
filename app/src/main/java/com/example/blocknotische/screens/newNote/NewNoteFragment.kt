@@ -5,28 +5,23 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
-import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
 import kotlinx.android.synthetic.main.fragment_new_note.*
 
-class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteView {
-    @InjectPresenter
-    lateinit var presenter: NewNotePresenter
+class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteMainContract.View {
 
-
-    @ProvidePresenter
-    fun providePresenter(): NewNotePresenter {
-        return NewNotePresenter(dbHelper)
-    }
+   private lateinit var mPresenter: NewNotePresenter
 
     val dbHelper by lazy { DbHelper(context) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        mPresenter = NewNotePresenter(this, dbHelper)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,7 +47,7 @@ class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteVie
 
     override fun onStop() {
         super.onStop()
-        presenter.closeDatabase()
+        mPresenter.closeDatabase()
     }
 
     override fun closeFragment() {
@@ -69,7 +64,7 @@ class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteVie
             R.id.item_save -> {
                 val title = et_new_note_title.text.toString()
                 val body = et_new_note_body.text.toString()
-                presenter.createNewNote(title, body)
+                mPresenter.createNewNote(title, body)
             }
         }
         return false
@@ -80,19 +75,19 @@ class NewNoteFragment : MvpAppCompatFragment(), View.OnClickListener, NewNoteVie
         if (activity != null) {
             when (v.id) {
                 R.id.b_new_color_1 -> {
-                    presenter.selectColor(1)
+                    mPresenter.selectColor(1)
                     (activity as MainActivity).titleColor = 1
                 }
                 R.id.b_new_color_2 -> {
-                    presenter.selectColor(2)
+                    mPresenter.selectColor(2)
                     (activity as MainActivity).titleColor = 2
                 }
                 R.id.b_new_color_3 -> {
-                    presenter.selectColor(3)
+                    mPresenter.selectColor(3)
                     (activity as MainActivity).titleColor = 3
                 }
                 R.id.b_new_color_4 -> {
-                    presenter.selectColor(4)
+                    mPresenter.selectColor(4)
                     (activity as MainActivity).titleColor = 4
                 }
             }

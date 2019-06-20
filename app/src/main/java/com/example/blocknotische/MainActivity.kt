@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.example.blocknotische.screens.notesList.mvp.FragmentNotesList
+import com.example.blocknotische.screens.notesList.mvp.NotesListFragment
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFragmentNotesList() {
-        val notesListFragment = FragmentNotesList()
+        val notesListFragment = NotesListFragment()
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction().replace(R.id.recycler_view_container, notesListFragment).commit()
     }

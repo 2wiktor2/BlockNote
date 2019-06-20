@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.arellomobile.mvp.MvpAppCompatFragment
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.DbHelper
@@ -17,22 +15,18 @@ import com.example.blocknotische.screens.notesList.adapter.ClickInterface
 import com.example.blocknotische.screens.notesList.adapter.NotesAdapter
 import kotlinx.android.synthetic.main.fragment_notes_list.*
 
-class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView {
+class NotesListFragment : MvpAppCompatFragment(), ClickInterface, NotesListMainContract.View {
 
+private lateinit var mPresenter: NotesListPresenter
 
-    @InjectPresenter
-    lateinit var presenter: NotesListPresenter
-
-    @ProvidePresenter
-    fun providePresenter(): NotesListPresenter {
-        return NotesListPresenter(dbHelper)
-    }
 
     val dbHelper by lazy { DbHelper(context) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        mPresenter = NotesListPresenter(this, dbHelper)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,7 +35,7 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.start()
+        mPresenter.start()
 
     }
 
@@ -56,7 +50,7 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
 
     override fun onStop() {
         super.onStop()
-        presenter.closeDatabase()
+        mPresenter.closeDatabase()
     }
 
     override fun click(model: NoteModel) {
@@ -96,7 +90,7 @@ class FragmentNotesList : MvpAppCompatFragment(), ClickInterface, NotesListView 
     override fun showListOfNotes(list: ArrayList<NoteModel>) {
         my_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = NotesAdapter(list, this@FragmentNotesList)
+            adapter = NotesAdapter(list, this@NotesListFragment)
         }
     }
 }

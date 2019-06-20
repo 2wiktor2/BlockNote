@@ -1,39 +1,39 @@
 package com.example.blocknotische.screens.editNote
 
-import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import com.example.blocknotische.dataBase.DbHelper
 
-@InjectViewState
 class EditNotePresenter(
+        var mView: EditNoteFragment,
         val dbHelper: DbHelper,
         val title: String?,
-        val body: String?,
-        val color: Int?,
-        val id: Long?) : MvpPresenter<EditNoteView>() {
+        var body: String?,
+        var color: Int?,
+        var id: Long?) : EditNOteMainContract.Presenter {
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        viewState.setDataToFields(title, body)
 
+    override fun setDataToFields() {
+        mView.setDataToFields(title, body)
     }
 
-    fun updateNote(newTitle: String, newBody: String) {
-        if (newTitle == "" && newBody == "") {
-            viewState.showMessageFail()
-        } else {
+    override fun updateNote(newTitle: String, newBody: String) {
 
+        if (newTitle == "" && newBody == "") {
+            mView.showMessageFail()
+        } else {
             dbHelper.updateRow(newTitle, newBody, color, id)
-            viewState.closeFragment()
-            viewState.showMessageAccess()
+            mView.closeFragment()
+            mView.showMessageAccess()
         }
     }
 
-    fun returnInitialValues() {
-        viewState.setInitialValues(title, body)
+    override fun returnInitialValues() {
+        mView.setInitialValues(title, body)
     }
 
-    fun closeDatabase() {
+    override fun closeDatabase() {
         dbHelper.close()
     }
 }
+
+
+
