@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setMyTitle(title: String) {
+    fun setMyTitle(title: String?) {
         my_toolbar.title = title
     }
 

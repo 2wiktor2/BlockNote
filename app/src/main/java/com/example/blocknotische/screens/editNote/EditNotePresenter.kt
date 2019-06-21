@@ -1,28 +1,50 @@
 package com.example.blocknotische.screens.editNote
 
-import com.example.blocknotische.dataBase.DbHelper
+import android.util.Log
+import com.example.blocknotische.dataBase.AppDataBase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class EditNotePresenter(
         var mView: EditNoteFragment,
-        val dbHelper: DbHelper,
+        private val db: AppDataBase?,
         val title: String?,
         var body: String?,
         var color: Int?,
         var id: Long?) : EditNOteMainContract.Presenter {
+
+    var modelDao = db?.modelDao()
 
 
     override fun setDataToFields() {
         mView.setDataToFields(title, body)
     }
 
+
     override fun updateNote(newTitle: String, newBody: String) {
 
         if (newTitle == "" && newBody == "") {
             mView.showMessageFail()
         } else {
-            dbHelper.updateRow(newTitle, newBody, color, id)
-            mView.closeFragment()
-            mView.showMessageAccess()
+            modelDao?.updateRow(newTitle, newBody, color, id)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe({
+
+                        Log.d("qwerty", "Ok")
+
+                    }, {
+
+                        Log.d("qwerty", "Not Ok")
+
+                    })
+
+
+ /*           mView.closeFragment()
+            mView.showMessageAccess()*/
+
+
+
         }
     }
 
@@ -31,7 +53,7 @@ class EditNotePresenter(
     }
 
     override fun closeDatabase() {
-        dbHelper.close()
+        db?.close()
     }
 }
 

@@ -1,22 +1,36 @@
 package com.example.blocknotische.screens.newNote
 
+import android.util.Log
+import com.example.blocknotische.dataBase.AppDataBase
+import com.example.blocknotische.dataBase.NotesModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-import com.example.blocknotische.dataBase.DbHelper
 
 class NewNotePresenter(
         var mView: NewNoteFragment,
-        val dbHelper: DbHelper) : NewNoteMainContract.Presenter {
+        db: AppDataBase?) : NewNoteMainContract.Presenter {
 
+    var modelDao = db?.modelDao()
 
     var color = 1
 
+
     override fun createNewNote(title: String, body: String) {
-
+        val model = NotesModel(title, body, color)
         if (title != "" && body != "") {
-            dbHelper.createRow(title, body, color)
-            mView.closeFragment()
-            mView.showAccessMessage()
-
+            modelDao?.createRow(model)?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(
+                            {
+                                mView.closeFragment()
+                                mView.showAccessMessage()
+                                Log.d("qwerty", "Ок")
+                            },
+                            {
+                                Log.d("qwerty", "Not Ok")
+                            }
+                    )
         } else {
             mView.showFailMessage()
         }
@@ -28,7 +42,7 @@ class NewNotePresenter(
     }
 
     override fun closeDatabase() {
-        dbHelper.close()
+//        dbHelper.close()
     }
 }
 

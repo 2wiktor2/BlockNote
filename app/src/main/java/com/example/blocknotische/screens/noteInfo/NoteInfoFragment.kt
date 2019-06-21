@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
-import com.example.blocknotische.dataBase.DbHelper
-import com.example.blocknotische.dataBase.NoteModel
+import com.example.blocknotische.dataBase.AppDataBase
+import com.example.blocknotische.dataBase.NotesModel
 import com.example.blocknotische.screens.editNote.EditNoteFragment
 import kotlinx.android.synthetic.main.fragment_note_info.*
 
@@ -16,12 +16,14 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
 
     private lateinit var mPresenter: NoteInfoPresenter
 
-    val dbHelper by lazy { DbHelper(context) }
+
+   val db by lazy { context?.let { AppDataBase.getInstance(it) } }
+
 
     companion object {
 
         const val KEY_NOTE_MODEL = "key_note_model"
-        fun newInstance(noteModel: NoteModel): NoteInfoFragment {
+        fun newInstance(noteModel: NotesModel): NoteInfoFragment {
             val fragmentNoteInfo = NoteInfoFragment()
             val bundle = Bundle()
             bundle.putSerializable(KEY_NOTE_MODEL, noteModel)
@@ -35,10 +37,10 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val noteModel: NoteModel? =
-                arguments?.getSerializable(KEY_NOTE_MODEL) as NoteModel
+        val model  =
+                arguments?.getSerializable(KEY_NOTE_MODEL)
 
-        mPresenter = NoteInfoPresenter(this, dbHelper, noteModel)
+        mPresenter = NoteInfoPresenter(this, db, model as NotesModel?)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,11 +52,11 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         mPresenter.setDataToFields()
     }
 
-    override fun setDataToFields(noteModel: NoteModel) {
-        note_info_title.text = noteModel.title
-        note_info_body.text = noteModel.body
+    override fun setDataToFields(notesModel: NotesModel) {
+        note_info_title.text = notesModel.title
+        note_info_body.text = notesModel.body
         (activity as MainActivity).apply {
-            setMyTitle(noteModel.title)
+            setMyTitle(notesModel.title)
             showArrow(true)
         }
     }
@@ -69,21 +71,21 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         when (item.itemId) {
             R.id.item_edit -> {
                 arguments?.let {
-                    val noteModel = it.getSerializable(KEY_NOTE_MODEL) as NoteModel
+                    val model = it.getSerializable(KEY_NOTE_MODEL) as NotesModel
                     val fragmentEditNote =
                             EditNoteFragment.newInstance(
-                                    noteModel.title,
-                                    noteModel.body,
-                                    noteModel.color,
-                                    noteModel.id
+                                    model.title,
+                                    model.body,
+                                    model.color,
+                                    model.id
                             )
 
                     val manager = fragmentManager
                     val transaction = manager?.beginTransaction()
-                    transaction?.let { fragmentTransaction ->
-                        fragmentTransaction.replace(R.id.recycler_view_container, fragmentEditNote)
-                        fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.commit()
+                    transaction?.let { it ->
+                        it.replace(R.id.recycler_view_container, fragmentEditNote)
+                        it.addToBackStack(null)
+                        it.commit()
                     }
                 }
             }
@@ -98,7 +100,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         return false
     }
 
-    override fun setIntentForSharing(title: String, body: String) {
+    override fun setIntentForSharing(title: String?, body: String?) {
         val message = """
             $title
             |$body"""

@@ -7,20 +7,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
-import com.example.blocknotische.dataBase.DbHelper
+import com.example.blocknotische.dataBase.AppDataBase
 import kotlinx.android.synthetic.main.fragment_new_note.*
 
 class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.View {
 
     private lateinit var mPresenter: NewNotePresenter
 
-    val dbHelper by lazy { DbHelper(context) }
+    private val db by lazy { context?.let { AppDataBase.getInstance(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        mPresenter = NewNotePresenter(this, dbHelper)
+        mPresenter = NewNotePresenter(this, db)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

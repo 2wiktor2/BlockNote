@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
-import com.example.blocknotische.dataBase.DbHelper
-import com.example.blocknotische.dataBase.NoteModel
+import com.example.blocknotische.dataBase.AppDataBase
+import com.example.blocknotische.dataBase.NotesModel
 import com.example.blocknotische.screens.newNote.NewNoteFragment
 import com.example.blocknotische.screens.noteInfo.NoteInfoFragment
 import com.example.blocknotische.screens.notesList.adapter.ClickInterface
@@ -17,16 +17,15 @@ import kotlinx.android.synthetic.main.fragment_notes_list.*
 
 class NotesListFragment : Fragment(), ClickInterface, NotesListMainContract.View {
 
-private lateinit var mPresenter: NotesListPresenter
+    private lateinit var mPresenter: NotesListPresenter
 
-
-    val dbHelper by lazy { DbHelper(context) }
+    val db by lazy { context?.let { AppDataBase.getInstance(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        mPresenter = NotesListPresenter(this, dbHelper)
+        mPresenter = NotesListPresenter(this, db)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,8 +52,8 @@ private lateinit var mPresenter: NotesListPresenter
         mPresenter.closeDatabase()
     }
 
-    override fun click(model: NoteModel) {
-        val fragmentNoteInfo = NoteInfoFragment.newInstance(model)
+    override fun click(notesModel: NotesModel) {
+        val fragmentNoteInfo = NoteInfoFragment.newInstance(notesModel)
         //  val manager = fragmentManager ?: return
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.apply {
@@ -87,7 +86,7 @@ private lateinit var mPresenter: NotesListPresenter
         return false
     }
 
-    override fun showListOfNotes(list: ArrayList<NoteModel>) {
+    override fun showListOfNotes(list: List<NotesModel>) {
         my_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = NotesAdapter(list, this@NotesListFragment)

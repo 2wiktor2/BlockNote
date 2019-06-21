@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
-import com.example.blocknotische.dataBase.DbHelper
+import com.example.blocknotische.dataBase.AppDataBase
 import kotlinx.android.synthetic.main.fragment_edit_note.*
 
 class EditNoteFragment : Fragment(), EditNOteMainContract.View {
@@ -19,7 +19,7 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
         private const val KEY_COLOR = "key_color"
         private const val KEY_ID = "key_id"
 
-        fun newInstance(title: String, body: String, color: Int, id: Long): EditNoteFragment {
+        fun newInstance(title: String?, body: String?, color: Int, id: Long): EditNoteFragment {
             val fragmentEditNote = EditNoteFragment()
             val bundle = Bundle()
             bundle.apply {
@@ -32,9 +32,7 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
             return fragmentEditNote
         }
     }
-
-
-    val dbHelper by lazy { DbHelper(context) }
+    val db by lazy { context?.let { AppDataBase.getInstance(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +42,7 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
         val color = arguments?.getInt(KEY_COLOR)
         val id = arguments?.getLong(KEY_ID)
 
-        mPresenter = EditNotePresenter(this, dbHelper, title, body, color, id)
+        mPresenter = EditNotePresenter(this, db, title, body, color, id)
 
         setHasOptionsMenu(true)
     }

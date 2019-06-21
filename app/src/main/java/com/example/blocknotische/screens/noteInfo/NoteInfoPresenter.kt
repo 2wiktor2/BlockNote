@@ -1,30 +1,44 @@
 package com.example.blocknotische.screens.noteInfo
 
-import com.example.blocknotische.dataBase.DbHelper
-import com.example.blocknotische.dataBase.NoteModel
+import android.util.Log
+import com.example.blocknotische.dataBase.AppDataBase
+import com.example.blocknotische.dataBase.NotesModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
-class NoteInfoPresenter (
+class NoteInfoPresenter(
         private val mView: NoteInfoFragment,
-        private val dbHelper: DbHelper,
-        private val noteModel: NoteModel?
+        db: AppDataBase?,
+        private val notesModel: NotesModel?
 ) : NoteInfoMainContract.Presenter {
+
+    var modelDao = db?.modelDao()
 
 
     override fun setDataToFields() {
-        noteModel?.let {
+        notesModel?.let {
             mView.setDataToFields(it)
         }
     }
 
     override fun deleteNote() {
-        noteModel?.id?.let { dbHelper.deleteRow(it) }
-        mView.closeFragment()
-        mView.showMessageDelete()
+        notesModel?.id?.let {
+            modelDao?.deleteRow(it)
+                    ?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe({
+                        mView.closeFragment()
+                        mView.showMessageDelete()
+                    }, {
+                        Log.d("qwerty", "Not Ok")
+                    })
+        }
+
     }
 
     override fun shareNote() {
-        noteModel?.let { mView.setIntentForSharing(it.title, it.body) }
+        notesModel.let { mView.setIntentForSharing(it?.title, it?.body) }
     }
 
 }

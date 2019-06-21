@@ -1,6 +1,6 @@
 package com.example.blocknotische.screens.notesList.mvp
 
-import com.example.blocknotische.dataBase.NoteModel
+import com.example.blocknotische.dataBase.NotesModel
 
 interface NotesListMainContract {
     interface Presenter{
@@ -9,6 +9,6 @@ interface NotesListMainContract {
     }
 
     interface View{
-        fun showListOfNotes(list : ArrayList<NoteModel>)
+        fun showListOfNotes(list: List<NotesModel>)
     }
 }

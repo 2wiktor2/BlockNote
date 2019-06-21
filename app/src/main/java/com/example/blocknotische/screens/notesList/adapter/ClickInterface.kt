@@ -1,7 +1,7 @@
 package com.example.blocknotische.screens.notesList.adapter
 
-import com.example.blocknotische.dataBase.NoteModel
+import com.example.blocknotische.dataBase.NotesModel
 
 interface ClickInterface {
-    fun click(model: NoteModel)
+    fun click(notesModel: NotesModel)
 }

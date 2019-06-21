@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blocknotische.R
-import com.example.blocknotische.dataBase.NoteModel
+import com.example.blocknotische.dataBase.NotesModel
 
-class NotesAdapter(private val list: List<NoteModel>, private val clickInterface: ClickInterface) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter(private val list: List<NotesModel>, private val clickInterface: ClickInterface) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -39,9 +39,9 @@ class NotesAdapter(private val list: List<NoteModel>, private val clickInterface
         }
 
         @SuppressLint("ResourceAsColor")
-        fun bind(model: NoteModel) {
-            title.text = model.title
-            when (model.color) {
+        fun bind(notesModel: NotesModel) {
+            title.text = notesModel.title
+            when (notesModel.color) {
                 1 -> indicator.setBackgroundColor(Color.GRAY)
                 2 -> indicator.setBackgroundColor(Color.GREEN)
                 3 -> indicator.setBackgroundColor(Color.YELLOW)
