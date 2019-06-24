@@ -7,22 +7,27 @@ import androidx.room.RoomDatabase
 
 @Database(entities = arrayOf(NotesModel::class), version = 1)
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun modelDao(): ModelDao
 
+    abstract fun modelDao(): ModelDao
 
     companion object {
 
-        @Volatile private var INSTANCE: AppDataBase? = null
-
-        fun getInstance(context: Context): AppDataBase =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+        private var INSTANCE: AppDataBase? = null
+        fun getInstance(context: Context?): AppDataBase {
+            if (INSTANCE == null) {
+                if (context != null) {
+                    INSTANCE = Room
+                            .databaseBuilder(
+                                    context.applicationContext,
+                                    AppDataBase::class.java,
+                                    "NotesModel")
+                            .build()
                 }
+            }
+            return INSTANCE as AppDataBase
 
-        private fun buildDatabase(context: Context) =
-                Room.databaseBuilder(context.applicationContext,
-                        AppDataBase::class.java, "NotesModel")
-                        .build()
+
+        }
     }
 }
 

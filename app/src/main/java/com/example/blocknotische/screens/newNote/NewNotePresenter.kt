@@ -1,6 +1,5 @@
 package com.example.blocknotische.screens.newNote
 
-import android.util.Log
 import com.example.blocknotische.dataBase.AppDataBase
 import com.example.blocknotische.dataBase.NotesModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,19 +8,19 @@ import io.reactivex.schedulers.Schedulers
 
 class NewNotePresenter(
         var mView: NewNoteFragment,
-        db: AppDataBase?) : NewNoteMainContract.Presenter {
+        db: AppDataBase) : NewNoteMainContract.Presenter {
 
-    var modelDao = db?.modelDao()
+    var modelDao = db.modelDao()
 
     var color = 1
 
 
     override fun createNewNote(title: String, body: String) {
         val model = NotesModel(title, body, color)
-        if (title != "" && body != "") modelDao?.createRow(model)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(
+        if (title.isNotEmpty() && body.isNotEmpty()) modelDao.createRow(model)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                         {
                             mView.closeFragment()
                             mView.showAccessMessage()
@@ -34,8 +33,8 @@ class NewNotePresenter(
     }
 
 
-    override fun selectColor(important: Int) {
-        color = important
+    override fun selectColor(i: Int) {
+        color = i
     }
 
     override fun closeDatabase() {

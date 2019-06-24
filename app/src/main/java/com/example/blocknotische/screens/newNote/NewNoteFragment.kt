@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_new_note.*
 class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.View {
 
     private lateinit var mPresenter: NewNotePresenter
-    private val db by lazy { context?.let { AppDataBase.getInstance(it) } }
+    private val db by lazy { AppDataBase.getInstance(context) }
     var model = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

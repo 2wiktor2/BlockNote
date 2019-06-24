@@ -19,7 +19,7 @@ class NotesListFragment : Fragment(), ClickInterface, NotesListMainContract.View
 
     private lateinit var mPresenter: NotesListPresenter
 
-    val db by lazy { context?.let { AppDataBase.getInstance(it) } }
+    val db by lazy { AppDataBase.getInstance(context)  }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

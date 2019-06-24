@@ -33,7 +33,8 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
         }
     }
 
-    val db by lazy { context?.let { AppDataBase.getInstance(it) } }
+    val db = AppDataBase.getInstance(context)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
         val body = arguments?.getString(KEY_BODY)
         val color = arguments?.getInt(KEY_COLOR)
         val id = arguments?.getLong(KEY_ID)
+
 
         mPresenter = EditNotePresenter(this, db, title, body, color, id)
 

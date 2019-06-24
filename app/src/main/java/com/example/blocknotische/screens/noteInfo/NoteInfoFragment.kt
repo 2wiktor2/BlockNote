@@ -16,7 +16,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
 
     private lateinit var mPresenter: NoteInfoPresenter
 
-    val db by lazy { context?.let { AppDataBase.getInstance(it) } }
+    val db by lazy { AppDataBase.getInstance(context)  }
 
     companion object {
 
