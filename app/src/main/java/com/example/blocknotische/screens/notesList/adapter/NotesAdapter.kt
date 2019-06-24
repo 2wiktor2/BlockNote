@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.blocknotische.Importance
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.NotesModel
 
@@ -42,10 +43,10 @@ class NotesAdapter(private val list: List<NotesModel>, private val clickInterfac
         fun bind(notesModel: NotesModel) {
             title.text = notesModel.title
             when (notesModel.importanceOfANote) {
-                1 -> indicator.setBackgroundColor(Color.GRAY)
-                2 -> indicator.setBackgroundColor(Color.GREEN)
-                3 -> indicator.setBackgroundColor(Color.YELLOW)
-                4 -> indicator.setBackgroundColor(Color.RED)
+                Importance.UNIMPORTANT.importance -> indicator.setBackgroundColor(Color.GRAY)
+                Importance.POORLY_IMPORTANT.importance -> indicator.setBackgroundColor(Color.GREEN)
+                Importance.MEDIUM_IMPORTANT.importance -> indicator.setBackgroundColor(Color.YELLOW)
+                Importance.VERY_IMPORTANT.importance -> indicator.setBackgroundColor(Color.RED)
             }
         }
     }

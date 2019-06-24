@@ -15,7 +15,6 @@ class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.Vi
 
     private lateinit var mPresenter: NewNotePresenter
     private val db by lazy { AppDataBase.getInstance(context) }
-    var model = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

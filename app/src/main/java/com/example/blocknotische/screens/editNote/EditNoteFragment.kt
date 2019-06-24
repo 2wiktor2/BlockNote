@@ -16,16 +16,16 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
     companion object {
         private const val KEY_TITLE = "key_title"
         private const val KEY_BODY = "key_body"
-        private const val KEY_COLOR = "key_color"
+        private const val KEY_IMPORTANCE = "key_importance"
         private const val KEY_ID = "key_id"
 
-        fun newInstance(title: String?, body: String?, color: Int, id: Long): EditNoteFragment {
+        fun newInstance(title: String?, body: String?, importance: Int, id: Long): EditNoteFragment {
             val fragmentEditNote = EditNoteFragment()
             val bundle = Bundle()
             bundle.apply {
                 putString(KEY_TITLE, title)
                 putString(KEY_BODY, body)
-                putInt(KEY_COLOR, color)
+                putInt(KEY_IMPORTANCE, importance)
                 putLong(KEY_ID, id)
             }
             fragmentEditNote.arguments = bundle
@@ -41,7 +41,7 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
 
         val title = arguments?.getString(KEY_TITLE)
         val body = arguments?.getString(KEY_BODY)
-        val color = arguments?.getInt(KEY_COLOR)
+        val color = arguments?.getInt(KEY_IMPORTANCE)
         val id = arguments?.getLong(KEY_ID)
 
 
