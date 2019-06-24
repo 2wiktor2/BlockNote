@@ -10,7 +10,7 @@ class EditNotePresenter(
         private val db: AppDataBase?,
         val title: String?,
         var body: String?,
-        var color: Int?,
+        var importanceOfANote: Int?,
         var id: Long?) : EditNOteMainContract.Presenter {
 
     var modelDao = db?.modelDao()
@@ -25,27 +25,14 @@ class EditNotePresenter(
 
         if (newTitle == "" && newBody == "") {
             mView.showMessageFail()
-        } else {
-            modelDao?.updateRow(newTitle, newBody, color, id)
-                    ?.subscribeOn(Schedulers.io())
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe({
-
-                        Log.d("qwerty", "Ok")
-
-                    }, {
-
-                        Log.d("qwerty", "Not Ok")
-
-                    })
-
-
- /*           mView.closeFragment()
-            mView.showMessageAccess()*/
-
-
-
-        }
+        } else modelDao?.updateRow(newTitle, newBody, importanceOfANote, id)
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe({
+                    mView.closeFragment()
+                    mView.showMessageAccess()
+                }, {
+                })
     }
 
     override fun returnInitialValues() {

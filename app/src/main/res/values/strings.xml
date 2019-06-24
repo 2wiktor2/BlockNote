@@ -8,7 +8,11 @@
     <string name="note_was_not_saved">Заполните поля заметки</string>
     <string name="edit_note">Редактирование заметки</string>
     <string name="delete_note">Заметка удалена</string>
-    <string name="choice_color_of_note">Выбрать цвет заметки</string>
+    <string name="choice_color_of_note">Выбрать важность заметки</string>
+    <string name="very_important">VERY IMPORTANT</string>
+    <string name="medium_important">MEDIUM IMPORTANT</string>
+    <string name="poorly_important">POORLY IMPORTANT</string>
+    <string name="unimportant">UNIMPORTANT</string>
 
 
 </resources>

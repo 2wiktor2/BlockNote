@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.blocknotische.Importance
 import com.example.blocknotische.MainActivity
 import com.example.blocknotische.R
 import com.example.blocknotische.dataBase.AppDataBase
@@ -13,8 +14,8 @@ import kotlinx.android.synthetic.main.fragment_new_note.*
 class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.View {
 
     private lateinit var mPresenter: NewNotePresenter
-
     private val db by lazy { context?.let { AppDataBase.getInstance(it) } }
+    var model = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +31,10 @@ class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.Vi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        b_new_color_1.setOnClickListener(this)
-        b_new_color_2.setOnClickListener(this)
-        b_new_color_3.setOnClickListener(this)
-        b_new_color_4.setOnClickListener(this)
+        b_unimportant.setOnClickListener(this)
+        b_porly_important.setOnClickListener(this)
+        b_medium_important.setOnClickListener(this)
+        b_very_important.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -64,6 +65,7 @@ class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.Vi
                 val title = et_new_note_title.text.toString()
                 val body = et_new_note_body.text.toString()
                 mPresenter.createNewNote(title, body)
+                return true
             }
         }
         return false
@@ -73,21 +75,21 @@ class NewNoteFragment : Fragment(), View.OnClickListener, NewNoteMainContract.Vi
     override fun onClick(v: View) {
         if (activity != null) {
             when (v.id) {
-                R.id.b_new_color_1 -> {
-                    mPresenter.selectColor(1)
-                    (activity as MainActivity).titleColor = 1
+                R.id.b_unimportant -> {
+                    mPresenter.selectColor(Importance.UNIMPORTANT.importance)
+                    (activity as MainActivity).titleColor = Importance.UNIMPORTANT.importance
                 }
-                R.id.b_new_color_2 -> {
-                    mPresenter.selectColor(2)
-                    (activity as MainActivity).titleColor = 2
+                R.id.b_porly_important -> {
+                    mPresenter.selectColor(Importance.POORLY_IMPORTANT.importance)
+                    (activity as MainActivity).titleColor = Importance.POORLY_IMPORTANT.importance
                 }
-                R.id.b_new_color_3 -> {
-                    mPresenter.selectColor(3)
-                    (activity as MainActivity).titleColor = 3
+                R.id.b_medium_important -> {
+                    mPresenter.selectColor(Importance.MEDIUM_IMPORTANT.importance)
+                    (activity as MainActivity).titleColor = Importance.MEDIUM_IMPORTANT.importance
                 }
-                R.id.b_new_color_4 -> {
-                    mPresenter.selectColor(4)
-                    (activity as MainActivity).titleColor = 4
+                R.id.b_very_important -> {
+                    mPresenter.selectColor(Importance.VERY_IMPORTANT.importance)
+                    (activity as MainActivity).titleColor = Importance.VERY_IMPORTANT.importance
                 }
             }
         }

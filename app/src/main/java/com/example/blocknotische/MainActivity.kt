@@ -43,10 +43,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun setTitleColor(color: Int) {
         when (color) {
-            1 -> my_toolbar.setTitleTextColor(Color.GRAY)
-            2 -> my_toolbar.setTitleTextColor(Color.GREEN)
-            3 -> my_toolbar.setTitleTextColor(Color.YELLOW)
-            4 -> my_toolbar.setTitleTextColor(Color.RED)
+            Importance.UNIMPORTANT.importance -> my_toolbar.setTitleTextColor(Color.GRAY)
+            Importance.POORLY_IMPORTANT.importance -> my_toolbar.setTitleTextColor(Color.GREEN)
+            Importance.MEDIUM_IMPORTANT.importance -> my_toolbar.setTitleTextColor(Color.YELLOW)
+            Importance.VERY_IMPORTANT.importance -> my_toolbar.setTitleTextColor(Color.RED)
         }
     }
 }

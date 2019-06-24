@@ -20,13 +20,6 @@ class NotesListPresenter(
                 ?.subscribe({
                     mView.showListOfNotes(it)
                 }, {
-                    Log.d("qwerty", "Not Ok  $it")
                 })
-
-
-    }
-
-    override fun closeDatabase() {
-        // dbHelper.close()
     }
 }

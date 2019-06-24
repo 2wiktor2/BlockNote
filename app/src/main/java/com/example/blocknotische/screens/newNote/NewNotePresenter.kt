@@ -18,27 +18,24 @@ class NewNotePresenter(
 
     override fun createNewNote(title: String, body: String) {
         val model = NotesModel(title, body, color)
-        if (title != "" && body != "") {
-            modelDao?.createRow(model)?.subscribeOn(Schedulers.io())
-                    ?.observeOn(AndroidSchedulers.mainThread())
-                    ?.subscribe(
-                            {
-                                mView.closeFragment()
-                                mView.showAccessMessage()
-                                Log.d("qwerty", "Ок")
-                            },
-                            {
-                                Log.d("qwerty", "Not Ok")
-                            }
-                    )
-        } else {
+        if (title != "" && body != "") modelDao?.createRow(model)
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(
+                        {
+                            mView.closeFragment()
+                            mView.showAccessMessage()
+                        },
+                        {
+                        }
+                ) else {
             mView.showFailMessage()
         }
     }
 
 
-    override fun selectColor(i: Int) {
-        color = i
+    override fun selectColor(important: Int) {
+        color = important
     }
 
     override fun closeDatabase() {

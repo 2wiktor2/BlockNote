@@ -31,7 +31,6 @@ class NoteInfoPresenter(
                         mView.closeFragment()
                         mView.showMessageDelete()
                     }, {
-                        Log.d("qwerty", "Not Ok")
                     })
         }
 

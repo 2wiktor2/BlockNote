@@ -46,12 +46,6 @@ class NotesListFragment : Fragment(), ClickInterface, NotesListMainContract.View
             titleColor = Color.WHITE
         }
     }
-
-    override fun onStop() {
-        super.onStop()
-        mPresenter.closeDatabase()
-    }
-
     override fun click(notesModel: NotesModel) {
         val fragmentNoteInfo = NoteInfoFragment.newInstance(notesModel)
         //  val manager = fragmentManager ?: return

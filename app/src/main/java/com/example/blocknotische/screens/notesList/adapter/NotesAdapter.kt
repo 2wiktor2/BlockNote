@@ -41,7 +41,7 @@ class NotesAdapter(private val list: List<NotesModel>, private val clickInterfac
         @SuppressLint("ResourceAsColor")
         fun bind(notesModel: NotesModel) {
             title.text = notesModel.title
-            when (notesModel.color) {
+            when (notesModel.importanceOfANote) {
                 1 -> indicator.setBackgroundColor(Color.GRAY)
                 2 -> indicator.setBackgroundColor(Color.GREEN)
                 3 -> indicator.setBackgroundColor(Color.YELLOW)

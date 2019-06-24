@@ -16,9 +16,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
 
     private lateinit var mPresenter: NoteInfoPresenter
 
-
-   val db by lazy { context?.let { AppDataBase.getInstance(it) } }
-
+    val db by lazy { context?.let { AppDataBase.getInstance(it) } }
 
     companion object {
 
@@ -37,7 +35,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val model  =
+        val model =
                 arguments?.getSerializable(KEY_NOTE_MODEL)
 
         mPresenter = NoteInfoPresenter(this, db, model as NotesModel?)
@@ -52,11 +50,11 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         mPresenter.setDataToFields()
     }
 
-    override fun setDataToFields(notesModel: NotesModel) {
-        note_info_title.text = notesModel.title
-        note_info_body.text = notesModel.body
+    override fun setDataToFields(noteModel: NotesModel) {
+        note_info_title.text = noteModel.title
+        note_info_body.text = noteModel.body
         (activity as MainActivity).apply {
-            setMyTitle(notesModel.title)
+            setMyTitle(noteModel.title)
             showArrow(true)
         }
     }
@@ -76,7 +74,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
                             EditNoteFragment.newInstance(
                                     model.title,
                                     model.body,
-                                    model.color,
+                                    model.importanceOfANote,
                                     model.id
                             )
 
@@ -103,12 +101,9 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
     override fun setIntentForSharing(title: String?, body: String?) {
         val message = """
             $title
-            |$body"""
+            $body"""
         val bundleForSharing = Bundle()
         bundleForSharing.apply {
-            //            putString(Intent.EXTRA_TITLE, "Заголовок")
-//            putString(Intent.EXTRA_TEXT, "$title\n$body")
-
             putString(Intent.EXTRA_TEXT, message)
         }
         val sendIntent: Intent = Intent().apply {

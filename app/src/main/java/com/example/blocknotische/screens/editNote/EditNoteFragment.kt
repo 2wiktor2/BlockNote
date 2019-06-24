@@ -32,6 +32,7 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
             return fragmentEditNote
         }
     }
+
     val db by lazy { context?.let { AppDataBase.getInstance(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,9 +89,10 @@ class EditNoteFragment : Fragment(), EditNOteMainContract.View {
             }
             R.id.item_cancel_changes -> {
                 mPresenter.returnInitialValues()
+                return true
             }
         }
-        return false
+        return super.onOptionsItemSelected(item)
     }
 
     override fun setInitialValues(title: String?, body: String?) {
