@@ -29,8 +29,9 @@ class NoteInfoPresenter(
                     .subscribe({
                         mView.closeFragment()
                         mView.showMessageDelete()
+
                     }, {
-                    })
+         })
         }
 
     }

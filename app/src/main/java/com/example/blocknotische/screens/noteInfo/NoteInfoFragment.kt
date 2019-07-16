@@ -16,7 +16,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
 
     private lateinit var mPresenter: NoteInfoPresenter
 
-    val db by lazy { AppDataBase.getInstance(context)  }
+    val db by lazy { AppDataBase.getInstance(context) }
 
     companion object {
 
@@ -35,8 +35,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val model =
-                arguments?.getSerializable(KEY_NOTE_MODEL)
+        val model = arguments?.getSerializable(KEY_NOTE_MODEL)
 
         mPresenter = NoteInfoPresenter(this, db, model as NotesModel?)
     }
@@ -82,7 +81,7 @@ class NoteInfoFragment : Fragment(), NoteInfoMainContract.View {
                     val transaction = manager?.beginTransaction()
                     transaction?.let { it ->
                         it.replace(R.id.recycler_view_container, fragmentEditNote)
-                        it.addToBackStack(null)
+                       // it.addToBackStack(null)
                         it.commit()
                     }
                 }

@@ -31,6 +31,7 @@ class NotesAdapter(private val list: List<NotesModel>, private val clickInterfac
 
         private val title: TextView = itemView.findViewById(R.id.tv_item_title)
         private val indicator: Button = itemView.findViewById(R.id.b_item_indicator)
+        private val body: TextView = itemView.findViewById(R.id.tv_item_body)
 
         init {
             itemView.setOnClickListener {
@@ -42,6 +43,7 @@ class NotesAdapter(private val list: List<NotesModel>, private val clickInterfac
         @SuppressLint("ResourceAsColor")
         fun bind(notesModel: NotesModel) {
             title.text = notesModel.title
+            body.text = notesModel.body
             when (notesModel.importanceOfANote) {
                 Importance.UNIMPORTANT.importance -> indicator.setBackgroundColor(Color.GRAY)
                 Importance.POORLY_IMPORTANT.importance -> indicator.setBackgroundColor(Color.GREEN)
