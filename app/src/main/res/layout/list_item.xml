@@ -10,6 +10,7 @@
     android:focusable="true">
 
     <Button
+        android:layout_marginTop="8dp"
         android:id="@+id/b_item_indicator"
         android:layout_width="match_parent"
         android:layout_height="5dp"

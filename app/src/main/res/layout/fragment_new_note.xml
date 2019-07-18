@@ -2,6 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -12,55 +13,55 @@
 
         <TextView
             android:id="@+id/tv_top"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="@string/choice_color_of_note"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/choice_color_of_note"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:textSize="6sp"
-            android:text="@string/unimportant"
-            android:layout_marginTop="16dp"
             android:id="@+id/b_unimportant"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
+            android:layout_marginTop="16dp"
             android:background="#DADADA"
+            android:text="@string/unimportant"
+            android:textSize="6sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/b_porly_important"
-            app:layout_constraintTop_toBottomOf="@id/tv_top"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_top" />
 
         <Button
-            android:textSize="6sp"
-            android:text="@string/poorly_important"
             android:id="@+id/b_porly_important"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
             android:background="#4CAF50"
+            android:text="@string/poorly_important"
+            android:textSize="6sp"
             app:layout_constraintLeft_toRightOf="@id/b_unimportant"
             app:layout_constraintRight_toLeftOf="@id/b_medium_important"
             app:layout_constraintTop_toTopOf="@id/b_unimportant" />
 
         <Button
-            android:textSize="6sp"
-            android:text="@string/medium_important"
             android:id="@+id/b_medium_important"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
             android:background="#FFEB3B"
+            android:text="@string/medium_important"
+            android:textSize="6sp"
             app:layout_constraintLeft_toRightOf="@id/b_porly_important"
             app:layout_constraintRight_toLeftOf="@id/b_very_important"
             app:layout_constraintTop_toTopOf="@id/b_unimportant" />
 
         <Button
-            android:textSize="6sp"
-            android:text="@string/very_important"
             android:id="@+id/b_very_important"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
             android:background="#F44336"
+            android:text="@string/very_important"
+            android:textSize="6sp"
             app:layout_constraintLeft_toRightOf="@id/b_medium_important"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/b_unimportant" />
@@ -72,8 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="040dp"
-            android:gravity="center"
+            android:layout_marginRight="40dp"
+            android:gravity="start"
             android:hint="@string/title_of_note"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -83,8 +84,8 @@
                 android:id="@+id/et_new_note_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:inputType="text" />
+                android:gravity="start"
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -104,8 +105,9 @@
                 android:id="@+id/et_new_note_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:inputType="text" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:lines="20" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

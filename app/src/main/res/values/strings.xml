@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">BlockNotiSche</string>
-    <string name="title_of_note">Заголовок заметки</string>
-    <string name="body_of_note">Заметки</string>
+    <string name="title_of_note">Заголовок</string>
+    <string name="body_of_note">Заметка</string>
     <string name="new_note">Новая заметка</string>
 
     <string name="note_was_saved">Заметка сохранена</string>
     <string name="note_was_not_saved">Заполните поля заметки</string>
     <string name="edit_note">Редактирование заметки</string>
     <string name="delete_note">Заметка удалена</string>
-    <string name="choice_color_of_note">Выбрать важность заметки</string>
+    <string name="choice_color_of_note">Важность заметки</string>
     <string name="very_important">VERY IMPORTANT</string>
     <string name="medium_important">MEDIUM IMPORTANT</string>
     <string name="poorly_important">POORLY IMPORTANT</string>
